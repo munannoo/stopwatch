@@ -7,7 +7,7 @@ import Watch from "./watch.jsx";
 function App() {
   return (
     <>
-      <Watch></Watch>
+      <Watch />
     </>
   );
 }

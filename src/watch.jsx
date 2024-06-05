@@ -2,44 +2,43 @@ import React, { useState, useEffect, useRef } from "react";
 
 function Watch() {
   const [isRunning, setRunning] = useState(false);
-  const timeIntervalRef = useRef({
-    sec: "0",
-    min: "0",
-    hrs: "0",
-  });
+  const [time, setTime] = useState(0);
+  const intervalRef = useRef(null);
 
-  let seconds = timeIntervalRef.current.sec;
-  let minutes = timeIntervalRef.current.min;
-  let hours = timeIntervalRef.current.hrs;
-
-  function start() {
-    setRunning(true);
-    useEffect(() => {
-      timeIntervalRef.current = setInterval(() => {
-        seconds = seconds + 1;
-        if (seconds == 60) {
-          seconds = 0;
-          minutes = minutes + 1;
-        }
-
-        if (minutes == 60) {
-          minutes = 0;
-          hours = hours + 1;
-        }
+  useEffect(() => {
+    if (isRunning) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = setInterval(() => {
+        setTime(time + 1);
       }, 1000);
-    });
-  }
-  function lapse() {
-    if (isRunning == true) {
     }
+  }, [isRunning, time]);
+  function start() {
+    setRunning(!isRunning);
+    let startOrPause = document.querySelector(".start");
+    startOrPause.innerText == "Start"
+      ? (startOrPause.innerText = "Stop")
+      : (startOrPause.innerText = "Start");
   }
+  function lapse() {}
   function reset() {
-    setRunning(true);
+    setTime(0);
   }
+  function formatTime() {
+    let hours = Math.floor(time / 3600);
+    let temp = time % 3600;
+    let minutes = Math.floor(temp / 60);
+    let seconds = temp % 60;
 
+    seconds < 10 ? (seconds = `0${seconds}`) : seconds;
+    minutes < 10 ? (minutes = `0${minutes}`) : minutes;
+    hours < 10 ? (hours = `0${hours}`) : hours;
+
+    return `${hours}:${minutes}:${seconds}`;
+  }
   return (
     <div id="stopWatch">
-      <h1 className="display">00:00:00</h1>
+      <h1 className="display">{formatTime()}</h1>
       <div className="controls">
         <button className="start" onClick={() => start()}>
           Start
