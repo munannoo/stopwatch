@@ -6,9 +6,10 @@ function Watch() {
   const intervalRef = useRef(null);
 
   useEffect(() => {
+    clearInterval(intervalRef.current);
     if (isRunning) {
-      clearInterval(intervalRef.current);
       intervalRef.current = setInterval(() => {
+        console.log(time);
         setTime(time + 1);
       }, 1000);
     }
