@@ -14,15 +14,18 @@ function Watch() {
       }, 1000);
     }
   }, [isRunning, time]);
+
   function start() {
     setRunning(!isRunning);
-    let startOrPause = document.querySelector(".start");
+    var startOrPause = document.querySelector(".start");
     startOrPause.innerText == "Start"
       ? (startOrPause.innerText = "Stop")
       : (startOrPause.innerText = "Start");
   }
-  function lapse() {}
+  function laps() {}
   function reset() {
+    setRunning(false);
+    document.querySelector(".start").innerText = "Start";
     setTime(0);
   }
   function formatTime() {
@@ -44,8 +47,10 @@ function Watch() {
         <button className="start" onClick={() => start()}>
           Start
         </button>
-        <button className="lapse">Lapse</button>
-        <button className="reset">Reset</button>
+        <button className="laps">Lapse</button>
+        <button className="reset" onClick={() => reset()}>
+          Reset
+        </button>
       </div>
       <ol className="timeLapses"></ol>
     </div>
