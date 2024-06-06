@@ -22,12 +22,23 @@ function Watch() {
       ? (startOrPause.innerText = "Stop")
       : (startOrPause.innerText = "Start");
   }
-  function laps() {}
+
+  function laps() {
+    const list = document.getElementById("timeLaps");
+    let lappedTime = document.createTextNode(`${formatTime(time)}`);
+    console.log(typeof lappedTime);
+    let node = document.createElement("li");
+    node.appendChild(lappedTime);
+    console.log(node);
+    list.appendChild(node);
+  }
+
   function reset() {
     setRunning(false);
     document.querySelector(".start").innerText = "Start";
     setTime(0);
   }
+
   function formatTime() {
     let hours = Math.floor(time / 3600);
     let temp = time % 3600;
@@ -47,12 +58,14 @@ function Watch() {
         <button className="start" onClick={() => start()}>
           Start
         </button>
-        <button className="laps">Lapse</button>
+        <button className="laps" onClick={() => laps()}>
+          Laps
+        </button>
         <button className="reset" onClick={() => reset()}>
           Reset
         </button>
       </div>
-      <ol className="timeLapses"></ol>
+      <ol id="timeLaps"></ol>
     </div>
   );
 }
